@@ -3,12 +3,12 @@ package fr.usmb.m1isc.compilation.simple;
 import java_cup.runtime.Symbol;
 
 // Nom de la classe a generer
-class ExpressionsArithmetiquesParser;
+class EvaluateurParser;
 
 // Inclusion du code
 action code {:
 
-:};
+:}
 
 parser code {:
     // pour le parser (redefinition de la methode reportant les erreurs d'analyse)
@@ -33,18 +33,26 @@ parser code {:
     }
 :};
 
- init with {:
-
-:};
+init with {:
+    System.out.println("EvaluateurParser initialise");
+:}
 
 // Symboles terminaux
-terminal NOMBRE, PLUS, ESPACE, FIN;
-terminal ERREUR;
+terminal Integer NOMBRE;
+terminal PLUS, SEP;
 
 // Symboles non terminaux
-nonterminal expression;
+non terminal lect;
+non terminal Integer expr;
 
 // Grammaire
-expression ::= NOMBRE PLUS NOMBRE FIN {: System.out.println("Addition reconnue"); :}
-               |
-               erreur FIN {: System.out.println("Ce n'est pas une addition"); :};
+lect ::= expr lect
+         |
+         expr;
+expr ::= NOMBRE:n1 PLUS NOMBRE:n2 {: System.out.println(n1.intValue() + " + " + n2.intValue() + " = " + (n1.intValue() + n2.intValue())); :} SEP
+         |
+         NOMBRE:n {: System.out.println("n = " + n.intValue()); :}
+         |
+         NOMBRE:n {: System.out.println("n = " + n.intValue()); :} SEP
+         |
+         error SEP;

@@ -14,13 +14,13 @@ public class Main {
         SimpleParser p = new SimpleParser(lexer);
         p.parse();*/
 
-        ExpressionsArithmetiquesLexer expLexer;
+        EvaluateurLexer evalLexer;
         if (args.length > 0)
-            expLexer = new ExpressionsArithmetiquesLexer(new FileReader(args[0]));
+            evalLexer = new EvaluateurLexer(new FileReader(args[0]));
         else
-            expLexer = new ExpressionsArithmetiquesLexer(new InputStreamReader(System.in));
+            evalLexer = new EvaluateurLexer(new InputStreamReader(System.in));
         @SuppressWarnings("deprecation")
-        ExpressionsArithmetiquesParser p = new ExpressionsArithmetiquesParser(expLexer);
-        p.parse();
+        EvaluateurParser evalParser = new EvaluateurParser(evalLexer);
+        evalParser.parse();
     }
 }
