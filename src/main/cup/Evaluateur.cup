@@ -38,7 +38,7 @@ init with {:
 :}
 
 // Symboles terminaux
-terminal PLUS, MOINS, SEP, ERROR;
+terminal PLUS, MOINS, FOIS, DIV, PAR_G, PAR_D, SEP, ERROR;
 terminal Integer NOMBRE;
 
 // Symboles non terminaux
@@ -47,11 +47,14 @@ non terminal Integer expr;
 
 // Priorites
 precedence left PLUS, MOINS;
+precedence left FOIS, DIV;
 
 // Grammaire
 sequence ::= expression sequence
              |
-             expression;
+             expression
+             |
+             error sequence;
 
 expression ::= expr:e {: System.out.println("Evaluation = " + e.intValue()); :} SEP
                |
@@ -60,5 +63,11 @@ expression ::= expr:e {: System.out.println("Evaluation = " + e.intValue()); :} 
 expr ::= expr:e1 PLUS expr:e2 {: RESULT = new Integer(e1.intValue() + e2.intValue()); :}
          |
          expr:e1 MOINS expr:e2 {: RESULT = new Integer(e1.intValue() - e2.intValue()); :}
+         |
+         expr:e1 FOIS expr:e2 {: RESULT = new Integer(e1.intValue() * e2.intValue()); :}
+         |
+         expr:e1 DIV expr:e2 {: RESULT = new Integer(e1.intValue() / e2.intValue()); :}
+         |
+         PAR_G expr:e PAR_D {: RESULT = e; :}
          |
          NOMBRE:n {: RESULT = n; :};
