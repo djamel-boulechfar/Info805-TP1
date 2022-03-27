@@ -21,6 +21,7 @@ import java_cup.runtime.Symbol;
 // Definitions regulieres
 nombre = [0-9]+
 plus = "+"
+moins = "-"
 espace = \s
 sep = ";"
 
@@ -29,5 +30,7 @@ sep = ";"
 // Regles lexicales
 {nombre} { return new Symbol(EvaluateurParserSym.NOMBRE, new Integer(yytext())); }
 {plus} { return new Symbol(EvaluateurParserSym.PLUS); }
+{moins} { return new Symbol(EvaluateurParserSym.MOINS); }
 {espace} { /* Rien a faire */ }
 {sep} { return new Symbol(EvaluateurParserSym.SEP); }
+. { return new Symbol(EvaluateurParserSym.ERROR); }
