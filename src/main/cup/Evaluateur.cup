@@ -1,6 +1,6 @@
 // Package et imports
 package fr.usmb.m1isc.compilation.simple;
-import java_cup.runtime.Symbol;
+import java_cup.runtime.*;
 
 // Nom de la classe a generer
 class EvaluateurParser;
@@ -38,21 +38,25 @@ init with {:
 :}
 
 // Symboles terminaux
-terminal Integer NOMBRE;
 terminal PLUS, SEP;
+terminal Integer NOMBRE;
 
 // Symboles non terminaux
-non terminal lect;
+non terminal sequence, expression;
 non terminal Integer expr;
 
+// Priorites
+precedence left PLUS;
+
 // Grammaire
-lect ::= expr lect
+sequence ::= expression sequence
+             |
+             expression;
+
+expression ::= expr:e {: System.out.println("Evaluation = " + e.intValue()); :} SEP
+               |
+               error SEP;
+
+expr ::= expr:e1 PLUS expr:e2 {: RESULT = new Integer(e1.intValue() + e2.intValue()); :}
          |
-         expr;
-expr ::= NOMBRE:n1 PLUS NOMBRE:n2 {: System.out.println(n1.intValue() + " + " + n2.intValue() + " = " + (n1.intValue() + n2.intValue())); :} SEP
-         |
-         NOMBRE:n {: System.out.println("n = " + n.intValue()); :}
-         |
-         NOMBRE:n {: System.out.println("n = " + n.intValue()); :} SEP
-         |
-         error SEP;
+         NOMBRE:n {: RESULT = n; :};
