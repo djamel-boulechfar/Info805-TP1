@@ -24,6 +24,8 @@ plus = "+"
 moins = "-"
 fois = "*"
 div = "/"
+mod = "mod"
+moinsUnaire = "-"
 par_g = "("
 par_d = ")"
 espace = \s
@@ -37,6 +39,8 @@ sep = ";"
 {moins} { return new Symbol(EvaluateurParserSym.MOINS); }
 {fois} { return new Symbol(EvaluateurParserSym.FOIS); }
 {div} { return new Symbol(EvaluateurParserSym.DIV); }
+{mod} { return new Symbol(EvaluateurParserSym.MOD); }
+{moinsUnaire} { return new Symbol(EvaluateurParserSym.MOINS_UNAIRE); }
 {par_g} { return new Symbol(EvaluateurParserSym.PAR_G); }
 {par_d} { return new Symbol(EvaluateurParserSym.PAR_D); }
 {espace} { /* Rien a faire */ }
